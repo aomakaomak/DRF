@@ -35,6 +35,8 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'users',
+    'vehicle',
+
 ]
 
 MIDDLEWARE = [
