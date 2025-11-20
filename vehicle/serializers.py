@@ -3,8 +3,18 @@ from rest_framework import serializers
 from vehicle.models import Car, Moto, Milage
 
 
+
+class MilageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Milage
+        fields = '__all__'
+
+
+
 class CarSerializer(serializers.ModelSerializer):
     last_milage = serializers.IntegerField(source='milage_set.all.first.milage')
+    milage = MilageSerializer(source='milage_set', many=True)
 
     class Meta:
         model = Car
@@ -18,16 +28,19 @@ class MotoSerializer(serializers.ModelSerializer):
         model = Moto
         fields = '__all__'
 
-    @staticmethod
-    def get_last_milage(instance):
+
+    def get_last_milage(self, instance):
         if instance.milage_set.all().first():
             return instance.milage_set.all().first().milage
         return 0
 
 
-
-class MilageSerializer(serializers.ModelSerializer):
+class MotoMilageSerializer(serializers.ModelSerializer):
+    moto = MotoSerializer()
 
     class Meta:
         model = Milage
-        fields = '__all__'
+        fields = ('milage', 'year', 'moto')
+
+
+
