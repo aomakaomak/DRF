@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from vehicle.models import Car, Moto, Milage
 from vehicle.serializers import CarSerializer, MotoSerializer, MilageSerializer, MotoMilageSerializer, MotoCreateSerializer
-
+from vehicle.permissions import IsOwnerOrStaff
 
 
 class CarViewSet(viewsets.ModelViewSet):
@@ -17,6 +17,12 @@ class CarViewSet(viewsets.ModelViewSet):
 
 class MotoCreateAPIView(generics.CreateAPIView):
     serializer_class = MotoCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        new_moto = serializer.save()
+        new_moto.owner = self.request.user
+        new_moto.save()
 
 
 class MotoListAPIView(generics.ListAPIView):
@@ -32,6 +38,7 @@ class MotoRetrieveAPIView(generics.RetrieveAPIView):
 class MotoUpdateAPIView(generics.UpdateAPIView):
     serializer_class = MotoSerializer
     queryset = Moto.objects.all()
+    permission_classes = [IsOwnerOrStaff]
 
 
 class MotoDestroyAPIView(generics.DestroyAPIView):
