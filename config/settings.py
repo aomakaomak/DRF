@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 
+from datetime import timedelta
+
 
 from pathlib import Path
 
@@ -136,4 +138,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ]
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=10),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
 }
