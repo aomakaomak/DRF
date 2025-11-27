@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     'users',
     'vehicle',
+    'drf_yasg',
+    'corsheaders',
 
 ]
 
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -144,3 +147,15 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=10),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000"
+]
+
+CUR_API_URL = 'https://api.currencyapi.com'
+
+CUR_API_KEY = 'cur_live_m9a0w2PX3fc6PyuoHD63XmxFnAGqiLgHqCw9KsKs'
